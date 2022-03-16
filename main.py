@@ -10,3 +10,4 @@ for i in data.contacts:
     res.append([i.get_Q_MVS(), i.get_Q_VEM(), i.get_Q_IIP(), i.get_Q_DCC()])
 for i in res:
     print(i)
+
