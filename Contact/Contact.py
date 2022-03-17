@@ -1,4 +1,5 @@
 import numpy as np
+np.seterr(all='raise')
 
 class Contact:
 
@@ -14,8 +15,24 @@ class Contact:
         return self.point2 - self.point1, self.point1 - self.point2
 
     def calculate_ot(self, point, n):
-        if n[2] == 0:
-            if n[1] != 0:
+        ox = np.random.randint(50)
+        while ox == point[0]:
+            ox = np.random.randint(50)
+        oy = np.random.randint(50)
+        while oy == point[1]:
+            oy = np.random.randint(50)
+        try:
+            oz = ((n * point).sum() - n[0] * ox - n[1] * oy) / n[2]
+        except:
+            oy = np.random.randint(50)
+            while oy == point[1]:
+                oy = np.random.randint(50)
+            oz = np.random.randint(50)
+            while oz == point[2]:
+                oz = np.random.randint(50)
+            try:
+                ox = ((n * point).sum() - n[1] * oy - n[2] * oz) / n[0]
+            except:
                 ox = np.random.randint(50)
                 while ox == point[0]:
                     ox = np.random.randint(50)
@@ -23,53 +40,34 @@ class Contact:
                 while oz == point[2]:
                     oz = np.random.randint(50)
                 oy = ((n * point).sum() - n[0] * ox - n[2] * oz) / n[1]
-                o = np.array([ox - point[0], oy - point[1], oz - point[2]])
-            else:
-                oy = np.random.randint(50)
-                while oy == point[1]:
-                    oy = np.random.randint(50)
-                oz = np.random.randint(50)
-                while oz == point[2]:
-                    oz = np.random.randint(50)
-                ox = ((n * point).sum() - n[1] * oy - n[2] * oz) / n[0]
-                o = np.array([ox - point[0], oy - point[1], oz - point[2]])
-        else:
-            ox = np.random.randint(50)
-            while ox == point[0]:
-                ox = np.random.randint(50)
-            oy = np.random.randint(50)
-            while oy == point[1]:
-                oy = np.random.randint(50)
-            oz = ((n * point).sum() - n[0] * ox - n[1] * oy) / n[2]
-            o = np.array([ox - point[0], oy - point[1], oz - point[2]])
+        o = np.array([ox - point[0], oy - point[1], oz - point[2]])
 
         rand_tx = np.random.randint(50)
         while rand_tx == point[0] or rand_tx == ox:
             rand_tx = np.random.randint(50)
-        linear_model = np.array([[n[0], n[1], n[2]],[ox-point[0], oy-point[1], oz-point[2]],[1, 0, 0]])
-        if np.linalg.det(linear_model) == 0:
+        a = np.array([[n[0], n[1], n[2]], [ox - point[0], oy - point[1], oz - point[2]], [1, 0, 0]])
+        b = np.array(
+            [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), rand_tx])
+        try:
+            t = np.linalg.solve(a, b)
+        except:
             rand_ty = np.random.randint(50)
             while rand_ty == point[1] or rand_ty == oy:
                 rand_ty = np.random.randint(50)
-            linear_model = np.array([[n[0], n[1], n[2]], [ox - point[0], oy - point[1], oz - point[2]], [0, 1, 0]])
-            if np.linalg.det(linear_model) == 0:
+            a = np.array([[n[0], n[1], n[2]], [ox - point[0], oy - point[1], oz - point[2]], [0, 1, 0]])
+            b = np.array(
+                [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), rand_ty])
+            try:
+                t = np.linalg.solve(a, b)
+            except:
                 rand_tz = np.random.randint(50)
                 while rand_tz == point[2] or rand_tz == oz:
                     rand_tz = np.random.randint(50)
                 a = np.array([[n[0], n[1], n[2]], [ox - point[0], oy - point[1], oz - point[2]], [0, 0, 1]])
-                b = np.array([(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), rand_tz])
+                b = np.array(
+                    [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), rand_tz])
                 t = np.linalg.solve(a, b)
-                t = t - point
-            else:
-                a = np.array([[n[0], n[1], n[2]], [ox - point[0], oy - point[1], oz - point[2]], [0, 1, 0]])
-                b = np.array([(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), rand_ty])
-                t = np.linalg.solve(a, b)
-                t = t - point
-        else:
-            a = np.array([[n[0], n[1], n[2]],[ox-point[0], oy-point[1], oz-point[2]],[1, 0, 0]])
-            b = np.array([(n * point).sum(), ox*point[0]+oy*point[1]+oz*point[2]-(point*point).sum(), rand_tx])
-            t = np.linalg.solve(a, b)
-            t = t - point
+        t = t - point
 
         n = n/np.linalg.norm(n)
         cross_product_ot = np.cross(o, t)/(np.linalg.norm(o) * np.linalg.norm(t))
