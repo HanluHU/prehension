@@ -1,7 +1,7 @@
 from LoadFile.Load import *
 
 # Read data from file
-data = LoadFile("data.txt")
+data = LoadFile("Data/data.txt")
 
 # Calculate the 4 quality metrics of each grasp
 list_grasp_qualities = []
