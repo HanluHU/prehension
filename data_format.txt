@@ -1,6 +1,6 @@
-5                    nombre de préhensions
-2 2 2                centre de masse de l'objet
-4 0 5 6 8 7          une préhension = point1(4 0 5), point2(6 8 7)
+5                    number of grasps
+2 2 2                center masse of the object
+4 0 5 6 8 7          a grasp = point_1 (4 0 5), point_2 (6 8 7)
 2 0 6 6 3 8
 8 9 9 7 5 6
 5 8 9 5 6 7

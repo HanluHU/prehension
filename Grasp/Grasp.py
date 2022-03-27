@@ -1,19 +1,22 @@
 import numpy as np
 np.seterr(all='raise')
 
-class Contact:
+
+class Grasp:
 
     # point -> [x, y ,z]
-    # contact -> [point1, point2, cm]
-    def __init__(self, point1, point2, cm):
-        self.point1 = np.array(point1, dtype=np.float)
-        self.point2 = np.array(point2, dtype=np.float)
-        self.center_masse = np.array(cm, dtype=np.float)
-        self.__s = np.array([])
+    # grasp -> [point_1, point_2, center_masse]
+    def __init__(self, point_1, point_2, center_masse):
+
+        self.point_1 = np.array(point_1)
+        self.point_2 = np.array(point_2)
+        self.center_masse = np.array(center_masse)
+        self.__single_values = np.array([])
 
     # calculer vecteur n
     def calculate_n(self):
-        return self.point2 - self.point1, self.point1 - self.point2
+
+        return self.point_2 - self.point_1, self.point_1 - self.point_2
 
     # calculer vecteur o et t
     # si on a le vecteur normal n = [A, B, C], le point P = [px, py, pz]
@@ -26,7 +29,8 @@ class Contact:
     # ox, oy = entier aléatoire ===> oz ===> point O
     # tx = entier aléatoire ===> 3 équations, 3 variables ===> point T
     # vecteur o = vecteur PO, vecteur t = vecteur PT
-    def calculate_ot(self, point, n):
+    def calculate_o_t(self, point, n):
+
         # définir ox et oy aléatoirement, on peut calculer oz
         ox = np.random.randint(50)
         while ox == point[0]:
@@ -58,31 +62,31 @@ class Contact:
         o = np.array([ox - point[0], oy - point[1], oz - point[2]])
 
         # définir tx aléatoirement, on peut établir un système linéaire avec 3 équations, 3 variables
-        rand_tx = np.random.randint(50)
-        while rand_tx == point[0] or rand_tx == ox:
-            rand_tx = np.random.randint(50)
+        random_tx = np.random.randint(50)
+        while random_tx == point[0] or random_tx == ox:
+            random_tx = np.random.randint(50)
         a = np.array([[n[0], n[1], n[2]], [ox - point[0], oy - point[1], oz - point[2]], [1, 0, 0]])
         b = np.array(
-            [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), rand_tx])
+            [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), random_tx])
         try:
             # exception: le déterminant de la matrice a = 0
             t = np.linalg.solve(a, b)
         except:
-            rand_ty = np.random.randint(50)
-            while rand_ty == point[1] or rand_ty == oy:
-                rand_ty = np.random.randint(50)
+            random_ty = np.random.randint(50)
+            while random_ty == point[1] or random_ty == oy:
+                random_ty = np.random.randint(50)
             a = np.array([[n[0], n[1], n[2]], [ox - point[0], oy - point[1], oz - point[2]], [0, 1, 0]])
             b = np.array(
-                [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), rand_ty])
+                [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), random_ty])
             try:
                 t = np.linalg.solve(a, b)
             except:
-                rand_tz = np.random.randint(50)
-                while rand_tz == point[2] or rand_tz == oz:
-                    rand_tz = np.random.randint(50)
+                random_tz = np.random.randint(50)
+                while random_tz == point[2] or random_tz == oz:
+                    random_tz = np.random.randint(50)
                 a = np.array([[n[0], n[1], n[2]], [ox - point[0], oy - point[1], oz - point[2]], [0, 0, 1]])
                 b = np.array(
-                    [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), rand_tz])
+                    [(n * point).sum(), ox * point[0] + oy * point[1] + oz * point[2] - (point * point).sum(), random_tz])
                 t = np.linalg.solve(a, b)
         t = t - point
 
@@ -99,61 +103,69 @@ class Contact:
 
     # matrice de rotation = [n.T, t.T, o.T]
     def calculate_rotation_matrix(self):
-        n1, n2 = self.calculate_n()
-        o1, t1 = self.calculate_ot(self.point1, n1)
-        o2, t2 = self.calculate_ot(self.point2, n2)
-        R1 = np.column_stack((n1/np.linalg.norm(n1), t1/np.linalg.norm(t1), o1/np.linalg.norm(o1)))
-        R2 = np.column_stack((n2/np.linalg.norm(n2), t2/np.linalg.norm(t2), o2/np.linalg.norm(o2)))
-        return R1, R2
+
+        n_1, n_2 = self.calculate_n()
+        o_1, t_1 = self.calculate_o_t(self.point_1, n_1)
+        o_2, t_2 = self.calculate_o_t(self.point_2, n_2)
+        r_1 = np.column_stack((n_1/np.linalg.norm(n_1), t_1/np.linalg.norm(t_1), o_1/np.linalg.norm(o_1)))
+        r_2 = np.column_stack((n_2/np.linalg.norm(n_2), t_2/np.linalg.norm(t_2), o_2/np.linalg.norm(o_2)))
+        return r_1, r_2
 
     # S(r) = [ 0 , -rz,  ry]
     #        [ rz,   0, -rx]
     #        [-ry,  rx,   0]
     def calculate_s_matrix(self, point):
+
         vector = point - self.center_masse
-        col1 = np.array([0, vector[2], -vector[1]])
-        col2 = np.array([-vector[2], 0, vector[0]])
-        col3 = np.array([vector[1], -vector[0], 0])
-        S = np.column_stack((col1, col2, col3))
-        return S
+        column_0 = np.array([0, vector[2], -vector[1]])
+        column_1 = np.array([-vector[2], 0, vector[0]])
+        column_2 = np.array([vector[1], -vector[0], 0])
+        s = np.column_stack((column_0, column_1, column_2))
+        return s
 
     # matrice de préhension G(point) = [                R(point),        0]
     #                                  [S(point - cm) * R(point), R(point)]
     #                              G = [G(point1), G(point2)]
     def calculate_grasp_matrix(self):
-        R1, R2 = self.calculate_rotation_matrix()
-        S1 = self.calculate_s_matrix(self.point1)
-        S2 = self.calculate_s_matrix(self.point2)
-        G1 = np.vstack((np.hstack((R1, np.zeros((3, 3)))), np.hstack((np.dot(S1, R1), R1))))
-        G2 = np.vstack((np.hstack((R2, np.zeros((3, 3)))), np.hstack((np.dot(S2, R2), R2))))
-        G = np.hstack((G1, G2))
-        return G
+
+        r_1, r_2 = self.calculate_rotation_matrix()
+        s_1 = self.calculate_s_matrix(self.point_1)
+        s_2 = self.calculate_s_matrix(self.point_2)
+        g_1 = np.vstack((np.hstack((r_1, np.zeros((3, 3)))), np.hstack((np.dot(s_1, r_1), r_1))))
+        g_2 = np.vstack((np.hstack((r_2, np.zeros((3, 3)))), np.hstack((np.dot(s_2, r_2), r_2))))
+        g = np.hstack((g_1, g_2))
+        return g
 
     # calculer les valeurs singulières de la matrice de préhension G
-    def grasp_matrix_svd(self):
-        G = self.calculate_grasp_matrix()
-        u, s, vh = np.linalg.svd(G, full_matrices=True)
-        self.__s = s
+    def calculate_grasp_matrix_single_values(self):
+
+        g = self.calculate_grasp_matrix()
+        u, s, vh = np.linalg.svd(g, full_matrices=True)
+        self.__single_values = s
 
     # Q_MVS = le minimum des valeurs singulières
-    def get_Q_MVS(self):
-        if self.__s.size == 0:
-            self.grasp_matrix_svd()
-        return self.__s.min()
+    def calculate_Q_MVS(self):
+
+        if self.__single_values.size == 0:
+            self.calculate_grasp_matrix_single_values()
+        return self.__single_values.min()
 
     # Q_VEM = s1*s2*s3...*sn
-    def get_Q_VEM(self):
-        if self.__s.size == 0:
-            self.grasp_matrix_svd()
-        return np.prod(self.__s)
+    def calculate_Q_VEM(self):
+
+        if self.__single_values.size == 0:
+            self.calculate_grasp_matrix_single_values()
+        return np.prod(self.__single_values)
 
     # Q_IIP = min(s)/max(s)
-    def get_Q_IIP(self):
-        if self.__s.size == 0:
-            self.grasp_matrix_svd()
-        return self.__s.min()/self.__s.max()
+    def calculate_Q_IIP(self):
+
+        if self.__single_values.size == 0:
+            self.calculate_grasp_matrix_single_values()
+        return self.__single_values.min()/self.__single_values.max()
 
     # Q_DCC = la distance entre le centre du vecteur P1P2 et le centre de masse de l'objet
-    def get_Q_DCC(self):
-        c = (self.point1 + self.point2) / 2
-        return np.linalg.norm(c - self.center_masse)
+    def calculate_Q_DCC(self):
+
+        center = (self.point_1 + self.point_2) / 2
+        return np.linalg.norm(center - self.center_masse)
