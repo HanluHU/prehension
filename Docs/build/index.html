@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Grasp’s documentation! &mdash; doc_grasp 0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="#" class="icon icon-home"> doc_grasp
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Welcome to Grasp’s documentation!</a></li>
+<li><a class="reference internal" href="#module-LoadFile.Load">LoadFile</a></li>
+<li><a class="reference internal" href="#module-Error.Error">Error</a></li>
+<li><a class="reference internal" href="#module-Grasp.Grasp">Grasp</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">doc_grasp</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+      <li>Welcome to Grasp’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-grasp-s-documentation">
+<h1>Welcome to Grasp’s documentation!<a class="headerlink" href="#welcome-to-grasp-s-documentation" title="Permalink to this headline"></a></h1>
+</section>
+<section id="module-LoadFile.Load">
+<span id="loadfile"></span><h1>LoadFile<a class="headerlink" href="#module-LoadFile.Load" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="LoadFile.Load.LoadFile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">LoadFile.Load.</span></span><span class="sig-name descname"><span class="pre">LoadFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#LoadFile.Load.LoadFile" title="Permalink to this definition"></a></dt>
+<dd><p>Class for reading data from a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nb_grasps</strong> (<em>int</em>) – total number of grasps in the data file</p></li>
+<li><p><strong>center_masse</strong> (<em>list</em>) – the center masse of the object to grasp</p></li>
+<li><p><strong>list_grasps</strong> (<em>list</em>) – the list of all the Grasp objects</p></li>
+</ul>
+</dd>
+</dl>
+<p>Default constructor of the class LoadFile</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_path</strong> (<em>str</em>) – the path of the input data file</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a LoadFile Object that contains all the Grasp objects in the data file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#LoadFile.Load.LoadFile" title="LoadFile.Load.LoadFile">LoadFile</a></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>OSError</strong> – Fail to open/read file</p></li>
+<li><p><strong>ValueError</strong> – Fail to transform string to int/float</p></li>
+<li><p><a class="reference internal" href="#Error.Error.InputFormatError" title="Error.Error.InputFormatError"><strong>InputFormatError</strong></a> – Wrong format of the file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-Error.Error">
+<span id="error"></span><h1>Error<a class="headerlink" href="#module-Error.Error" title="Permalink to this headline"></a></h1>
+<dl class="py exception">
+<dt class="sig sig-object py" id="Error.Error.Error">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Error.Error.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><a class="headerlink" href="#Error.Error.Error" title="Permalink to this definition"></a></dt>
+<dd><p>Base class for exceptions in the module</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="Error.Error.InputFormatError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Error.Error.</span></span><span class="sig-name descname"><span class="pre">InputFormatError</span></span><a class="headerlink" href="#Error.Error.InputFormatError" title="Permalink to this definition"></a></dt>
+<dd><p>Exception raised for errors in the input format</p>
+</dd></dl>
+
+</section>
+<section id="module-Grasp.Grasp">
+<span id="grasp"></span><h1>Grasp<a class="headerlink" href="#module-Grasp.Grasp" title="Permalink to this headline"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Grasp.Grasp.</span></span><span class="sig-name descname"><span class="pre">Grasp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center_masse</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp" title="Permalink to this definition"></a></dt>
+<dd><p>Class for calculating the quality metrics of a grasp</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point_1</strong> (<em>ndarray</em>) – contact point 1</p></li>
+<li><p><strong>point_2</strong> (<em>ndarray</em>) – contact point 2</p></li>
+<li><p><strong>center_masse</strong> (<em>ndarray</em>) – center masse of the object to grasp</p></li>
+<li><p><strong>__single_values</strong> (<em>ndarray</em>) – the single values of the grasp matrix</p></li>
+</ul>
+</dd>
+</dl>
+<p>Default constructor of the class Grasp, convert the input list object to Numpy array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point_1</strong> (<em>ndarray</em>) – contact point 1</p></li>
+<li><p><strong>point_2</strong> (<em>ndarray</em>) – contact point 2</p></li>
+<li><p><strong>center_masse</strong> (<em>ndarray</em>) – center masse of the object to grasp</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a Grasp Object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#Grasp.Grasp.Grasp" title="Grasp.Grasp.Grasp">Grasp</a></p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_Q_DCC">
+<span class="sig-name descname"><span class="pre">calculate_Q_DCC</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_Q_DCC" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the quality metric Q_DCC</p>
+<p>Q_DCC = the distance between the center of the vector P1P2 and the center masse of the object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the quality metric Q_DCC</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_Q_IIP">
+<span class="sig-name descname"><span class="pre">calculate_Q_IIP</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_Q_IIP" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the quality metric Q_IIP</p>
+<p>Q_IIP = min(s)/max(s)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the quality metric Q_IIP</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_Q_MVS">
+<span class="sig-name descname"><span class="pre">calculate_Q_MVS</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_Q_MVS" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the quality metric Q_MVS</p>
+<p>Q_MVS = the minimum of the single values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the quality metric Q_MVS</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_Q_VEM">
+<span class="sig-name descname"><span class="pre">calculate_Q_VEM</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_Q_VEM" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the quality metric Q_VEM</p>
+<p>Q_VEM = s1*s2*s3…*sn</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the quality metric Q_VEM</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_grasp_matrix">
+<span class="sig-name descname"><span class="pre">calculate_grasp_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_grasp_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the Grasp Matrix</p>
+<p>G(point) =</p>
+<p>[R(point), 0]</p>
+<p>[S(point - cm) * R(point), R(point)]</p>
+<p>G = [G(point1), G(point2)]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the Grasp matrix of the current grasp</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_grasp_matrix_single_values">
+<span class="sig-name descname"><span class="pre">calculate_grasp_matrix_single_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_grasp_matrix_single_values" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the single values of the Grasp Matrix</p>
+<p>stock the results in the attribut self.__single_values</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_n">
+<span class="sig-name descname"><span class="pre">calculate_n</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_n" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the vector n by calculating the vector from point_1 to point_2 and from point2 to point1</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the corresponding vector n of point_1 and point_2</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_o_t">
+<span class="sig-name descname"><span class="pre">calculate_o_t</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_o_t" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate a random set of vector o and vector t with the point and its vector n</p>
+<p>The three vector n, t, o is perpendicular to each other.</p>
+<p>if we have the normal vector n = [A, B, C], the point P = [px, py, pz]</p>
+<p>point T and O are in the plane: Ax + By + Cz + D = 0, with D = -A*px -B*py -C*pz</p>
+<p>the vector P,T are perpendicular to the vector PO:</p>
+<p>(tx - px)(ox - px) + (ty - py)(oy - py) + (tz - pz)(oz - pz) = 0</p>
+<p>Atx + Bty + Ctz + D = 0</p>
+<p>Aox + Boy + Coz + D = 0</p>
+<p>3 equations, 6 variables ===&gt; illimited solutions</p>
+<p>ox, oy = random integer ===&gt; oz ===&gt; point O</p>
+<p>tx = random integer ===&gt; 3 equations, 3 variables ===&gt; point T</p>
+<p>vector o = vector PO, vector t = vector PT</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>ndarray</em>) – contact point</p></li>
+<li><p><strong>n</strong> (<em>ndarray</em>) – the vector n of the contact point in this Grasp</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the vector o and vector t of the contact point with the vector n</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ZeroDivisionError</strong> – a number is divided by a zero</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_rotation_matrix">
+<span class="sig-name descname"><span class="pre">calculate_rotation_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_rotation_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the rotation matrix of the two contact points</p>
+<p>First, normalize the vectors n, t, o. Then calculate the rotation matrix.</p>
+<p>rotation matrix = [n.T, t.T, o.T]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>2 rotation matrix</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Grasp.Grasp.Grasp.calculate_s_matrix">
+<span class="sig-name descname"><span class="pre">calculate_s_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Grasp.Grasp.Grasp.calculate_s_matrix" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate the S Matrix of a contact point</p>
+<p>r = point - center_masse</p>
+<p>S(r) =</p>
+<blockquote>
+<div><p>[ 0 , -rz,  ry]</p>
+<p>[ rz,   0, -rx]</p>
+<p>[-ry,  rx,   0]</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<em>ndarray</em>) – contact point</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the S matrix of the contact point</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hanlu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
