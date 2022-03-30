@@ -25,43 +25,25 @@ class LoadFile:
             :raises InputFormatError: Wrong format of the file
         """
 
-        try:
-            # Open file and read
-            file = open(file_path, "r")
-        except OSError:
-            print("Could not open/read file:", file_path)
-            sys.exit()
 
-        try:
-            # Read the number of grasps in the file
-            self.nb_grasps = int(file.readline().strip())
-        except ValueError:
-            # Handle the exception
-            print("Wrong Format: line 1")
-            sys.exit()
+        # Open file and read
+        file = open(file_path, "r")
 
-        try:
-            # Read the center masse of the object
-            self.center_masse = list(map(float, file.readline().strip().split()))
-            if len(self.center_masse) != 3:
-                raise InputFormatError()
-        except:
-            # Handle the exception
-            print("Wrong Format!")
-            sys.exit()
+        # Read the number of grasps in the file
+        self.nb_grasps = int(file.readline().strip())
+
+        # Read the center masse of the object
+        self.center_masse = list(map(float, file.readline().strip().split()))
+        if len(self.center_masse) != 3:
+            raise InputFormatError()
 
         # list of grasps
         self.list_grasps = []
         for i in range(self.nb_grasps):
-            try:
-                # Read the two points in one row
-                list_xyz = list(map(float, file.readline().strip().split()))
-                if len(list_xyz) != 6:
-                    raise InputFormatError()
-            except:
-                # Handle the exception
-                print("Wrong Format!")
-                sys.exit()
+            # Read the two points in one row
+            list_xyz = list(map(float, file.readline().strip().split()))
+            if len(list_xyz) != 6:
+                raise InputFormatError()
             point_1 = list_xyz[:3]
             point_2 = list_xyz[3:]
             # Add the Grasp to the list
