@@ -213,11 +213,15 @@ class Grasp:
         """Calculate the single values of the Grasp Matrix
 
             stock the results in the attribut self.__single_values
+
+            :returns: the single values of the Grasp Matrix
+            :rtype: ndarray
         """
 
         g = self.calculate_grasp_matrix()
         u, s, vh = np.linalg.svd(g, full_matrices=True)
         self.__single_values = s
+        return s
 
     def calculate_Q_MVS(self):
         """Calculate the quality metric Q_MVS
