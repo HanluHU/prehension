@@ -62,3 +62,5 @@ print("Score: " + " ".join(str(i.round(3)) for i in list_score))
 # show the score of the best grasp and its index (start by 0)
 print("best grasp score and index (start by 0): ")
 print(max_score.round(3), max_score_index)
+
+input("Press Enter to continue...")
